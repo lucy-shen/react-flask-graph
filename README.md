@@ -7,7 +7,7 @@ cd api
 python3 -m venv venv
 source venv/bin/activate
 cd venv
-pip install flask python-dotenv
+pip3 install flask python-dotenv
 ```
 
 To set-up the React frontend: 
