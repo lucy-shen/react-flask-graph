@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { ArrowForward } from '@material-ui/icons';
+import Button from '@material-ui/core/Button';
 
 import SearchBar from "material-ui-search-bar";
 
@@ -72,6 +73,11 @@ export default function App() {
     setSentence('You entered ' + value);
   }
 
+  function useForceUpdate(){
+    const [update, setUpdate] = useState(0); // integer state
+    return () => setUpdate(update => update + 1); // update the state to force render
+}
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -126,6 +132,7 @@ export default function App() {
             </Grid>
             <Grid item xs={12}>
               <Card>
+               <Button onClick={useForceUpdate()} size="small" color="primary">reload</Button> 
                 <NetworkGraph sentence = {sentence}/>
               </Card>
             </Grid>

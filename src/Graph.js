@@ -33,12 +33,6 @@ const options = {
 };
 
 function NetworkGraph(props) {
-
-  const [currentTime, setCurrentTime] = useState({
-    nodes: [],
-    edges: []
-  });
-
   const [currentEdge, setCurrentEdge] = useState('select an edge');
 
   const [graph, setGraph] = useState({
@@ -49,11 +43,11 @@ function NetworkGraph(props) {
   });
 
 
+
   useEffect(() => {
     axios.get('/api/graph', { params: { value: props.sentence } }).then(response => {
       setGraph(response.data.value);
       console.log(response)
-      console.log(currentTime)
       console.log(graph)
     });
   }, [props.sentence]);
@@ -71,7 +65,7 @@ function NetworkGraph(props) {
 
   return (
     <div>
-      <Button onClick={() => window.location.reload(false)} size="small" color="primary">reload</Button>
+      {/* <Button onClick={() => window.location.reload(false)} size="small" color="primary">reload</Button> */}
       <Typography>
         from props {props.sentence}
       </Typography>
