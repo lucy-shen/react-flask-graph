@@ -64,19 +64,19 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function App() {
-  
+
   const classes = useStyles();
   const [value, setValue] = useState('');
   const [sentence, setSentence] = useState('');
 
   function doSomethingWith(value) {
-    setSentence('You entered ' + value);
+    setSentence(value);
   }
 
-  function useForceUpdate(){
+  function useForceUpdate() {
     const [update, setUpdate] = useState(0); // integer state
     return () => setUpdate(update => update + 1); // update the state to force render
-}
+  }
 
   return (
     <React.Fragment>
@@ -101,13 +101,13 @@ export default function App() {
               entirely.
             </Typography>
             <div className={classes.heroButtons}>
-            <SearchBar
-              value={value}
-              onChange={(newValue) => setValue(newValue)}
-              onRequestSearch={() => doSomethingWith(value)}
-              searchIcon={<ArrowForward color="action" />}
-              placeholder='placeHolder'
-            />
+              <SearchBar
+                value={value}
+                onChange={(newValue) => setValue(newValue)}
+                onRequestSearch={() => doSomethingWith(value)}
+                searchIcon={<ArrowForward color="action" />}
+                placeholder='placeHolder'
+              />
 
             </div>
           </Container>
@@ -122,18 +122,26 @@ export default function App() {
                     Heading
                     </Typography>
                   <Typography>
-                    This is a media card. You can use this section to describe the content.
+                    This is a media card.
                     </Typography>
-                    <Typography>
-                    {sentence}
-                    </Typography>
+                  <Typography>
+                    You have entered: {sentence}
+                  </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12}>
               <Card>
-               <Button onClick={useForceUpdate()} size="small" color="primary">reload</Button> 
-                <NetworkGraph sentence = {sentence}/>
+                <CardContent className={classes.cardContent}>
+                  <Grid container spacing={3}
+                    justify="flex-end">
+                    <Typography>
+                      Graph not displaying properly?
+                    </Typography>
+                    <Button onClick={useForceUpdate()} size="small" color="primary">reload</Button>
+                  </Grid>
+                </CardContent>
+                <NetworkGraph sentence={sentence} />
               </Card>
             </Grid>
           </Grid>
