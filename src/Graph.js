@@ -43,11 +43,8 @@ function NetworkGraph(props) {
 
   const [graph, setGraph] = useState({
     nodes: [
-      { id: 1, label: "Node 1", title: "node 1 tootip text" },
-      { id: 2, label: "Node 2", title: "node 2 tootip text" }
     ],
     edges: [
-      { id: '1to2', from: 1, to: 2 }
     ]
   });
 
