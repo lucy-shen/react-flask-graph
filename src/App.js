@@ -61,13 +61,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function doSomethingWith(value) {
-  alert(value + ' was searched');
-}
 
 export default function App() {
+  
   const classes = useStyles();
   const [value, setValue] = useState('');
+  const [sentence, setSentence] = useState('');
+
+  function doSomethingWith(value) {
+    setSentence('You entered ' + value);
+  }
 
   return (
     <React.Fragment>
@@ -115,12 +118,15 @@ export default function App() {
                   <Typography>
                     This is a media card. You can use this section to describe the content.
                     </Typography>
+                    <Typography>
+                    {sentence}
+                    </Typography>
                 </CardContent>
               </Card>
             </Grid>
             <Grid item xs={12}>
               <Card>
-                <NetworkGraph />
+                <NetworkGraph sentence = {sentence}/>
               </Card>
             </Grid>
           </Grid>
