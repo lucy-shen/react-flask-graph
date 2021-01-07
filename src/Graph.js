@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Graph from "react-graph-vis";
 import ErrorBoundary from './ErrorBoundary';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
+import Button from '@material-ui/core/Button';
+import { useWindowWidth } from "@react-hook/window-size";
+
 import { v4 as uuidv4 } from 'uuid'
+
 
 const options = {
   layout: {
@@ -16,7 +20,8 @@ const options = {
 };
 
 function NetworkGraph(props) {
-  // const [currentEdge, setCurrentEdge] = useState('Select an edge');
+  const windowWidth = useWindowWidth();
+  const [currentEdge, setCurrentEdge] = useState('Select an edge');
 
   const [graph, setGraph] = useState({
     nodes: [
@@ -25,7 +30,10 @@ function NetworkGraph(props) {
     ]
   });
 
+  // console.log(dimensions);
 
+  const [update, setUpdate] = useState(0);
+  const version = useMemo(uuidv4, [graph, update, windowWidth]);
 
   useEffect(() => {
     axios.get('/api/graph', { params: { value: props.sentence } }).then(response => {
@@ -42,18 +50,19 @@ function NetworkGraph(props) {
       console.log(nodes);
       console.log("Selected edges:");
       console.log(edges);
-      // setCurrentEdge("You selected:" + edges);
+      setCurrentEdge("You selected:" + edges);
     }
   };
 
   return (
     <div>
-      {/* <Typography>
+      <Typography>
         {currentEdge}
-      </Typography> */}
+      </Typography>
+      <Button onClick={()=>setUpdate(update+1)} size="small" color="primary">recenter</Button>
       <ErrorBoundary>
         <Graph
-          key={uuidv4()}
+          key={version}
           graph={graph}
           options={options}
           events={events}

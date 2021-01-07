@@ -73,10 +73,10 @@ export default function App() {
     setSentence(value);
   }
 
-  function useForceUpdate() {
-    const [update, setUpdate] = useState(0); // integer state
-    return () => setUpdate(update => update + 1); // update the state to force render
-  }
+  // function useForceUpdate() {
+  //   const [update, setUpdate] = useState(0); // integer state
+  //   return () => setUpdate(update => update + 1); // update the state to force render
+  // }
 
   return (
     <React.Fragment>
@@ -138,7 +138,7 @@ export default function App() {
                     <Typography>
                       Graph not displaying properly?
                     </Typography>
-                    <Button onClick={useForceUpdate()} size="small" color="primary">reload</Button>
+                    {/* <Button onClick={useForceUpdate()} size="small" color="primary">reload</Button> */}
                   </Grid>
                 </CardContent>
                 <NetworkGraph sentence={sentence} />
