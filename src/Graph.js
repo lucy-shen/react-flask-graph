@@ -16,7 +16,7 @@ const options = {
 };
 
 function NetworkGraph(props) {
-  const [currentEdge, setCurrentEdge] = useState('Select an edge');
+  // const [currentEdge, setCurrentEdge] = useState('Select an edge');
 
   const [graph, setGraph] = useState({
     nodes: [
@@ -48,9 +48,9 @@ function NetworkGraph(props) {
 
   return (
     <div>
-      <Typography>
+      {/* <Typography>
         {currentEdge}
-      </Typography>
+      </Typography> */}
       <ErrorBoundary>
         <Graph
           key={uuidv4()}
