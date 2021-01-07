@@ -1,3 +1,37 @@
+# Setting up
+
+To set-up the Flask API:
+
+```
+cd api
+python3 -m venv venv
+source venv/bin/activate
+cd venv
+pip install flask python-dotenv`
+```
+
+To set-up the React frontend: 
+
+```
+npm install
+```
+
+# Running the app
+
+To run the API:
+
+```
+npm run start-api
+```
+
+(You can find this command in package.json)
+
+To run the frontend:
+
+```
+npm run start
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
