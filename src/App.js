@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import AppBar from '@material-ui/core/AppBar';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { ArrowForward } from '@material-ui/icons';
-import Button from '@material-ui/core/Button';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 
 import SearchBar from "material-ui-search-bar";
 
@@ -40,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heroButtons: {
     marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4)
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -62,6 +61,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const example1 = 'Example sentence 1';
+const example2 = 'Example sentence 2';
+const example3 = 'Example sentence 3';
 
 export default function App() {
 
@@ -69,14 +71,14 @@ export default function App() {
   const [value, setValue] = useState('');
   const [sentence, setSentence] = useState('');
 
+  const myRef = useRef(null)
+
+  const executeScroll = () => myRef.current.scrollIntoView({ behavior: "smooth" });
+
   function doSomethingWith(value) {
     setSentence(value);
+    executeScroll();
   }
-
-  // function useForceUpdate() {
-  //   const [update, setUpdate] = useState(0); // integer state
-  //   return () => setUpdate(update => update + 1); // update the state to force render
-  // }
 
   return (
     <React.Fragment>
@@ -108,43 +110,19 @@ export default function App() {
                 searchIcon={<ArrowForward color="action" />}
                 placeholder='placeHolder'
               />
-
             </div>
+            <Typography variant="h5" align="center" color="textSecondary" paragraph>
+              Examples
+            </Typography>
+            <MenuList>
+              <MenuItem onClick={(event) => doSomethingWith(example1)}>{example1}</MenuItem>
+              <MenuItem onClick={(event) => doSomethingWith(example2)}>{example2}</MenuItem>
+              <MenuItem onClick={(event) => doSomethingWith(example3)}>{example3}</MenuItem>
+            </MenuList>
           </Container>
         </div>
-        <Container className={classes.cardGrid} maxWidth="lg">
-          {/* End hero unit */}
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <Card>
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Heading
-                    </Typography>
-                  <Typography>
-                    This is a media card.
-                    </Typography>
-                  <Typography>
-                    You have entered: {sentence}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={12}>
-              <Card>
-                <CardContent className={classes.cardContent}>
-                  <Grid container spacing={3}
-                    justify="flex-end">
-                    <Typography>
-                      Graph not displaying properly?
-                    </Typography>
-                    {/* <Button onClick={useForceUpdate()} size="small" color="primary">reload</Button> */}
-                  </Grid>
-                </CardContent>
-                <NetworkGraph sentence={sentence} />
-              </Card>
-            </Grid>
-          </Grid>
+        <Container ref={myRef} className={classes.cardGrid} maxWidth="lg">
+          <NetworkGraph sentence={sentence} />
         </Container>
       </main>
       {/* Footer */}
