@@ -33,6 +33,7 @@ function NetworkGraph(props) {
   const classes = useStyles();
   const windowWidth = useWindowWidth();
   const [currentEdge, setCurrentEdge] = useState('Select an edge');
+  var ip = window.location.host;
 
   const [graph, setGraph] = useState({
     nodes: [
@@ -47,19 +48,36 @@ function NetworkGraph(props) {
   const version = useMemo(uuidv4, [graph, update, windowWidth]);
 
   useEffect(() => {
-    axios.get('/api/graph', { params: { value: props.sentence } }).then(response => {
+    if (!props.sentence) {
+      props.sentence = "Johnson";
+    }
+    axios.get('http://' + ip + '/api/graph', { params: { name: props.sentence } }).then(response => {
       setGraph(response.data.value);
       console.log(response)
       // console.log(graph)
     });
   }, [props.sentence]);
 
+  // const events = {
+  //   select: function (event) {
+  //     var { edges } = event;
+  //     console.log("Selected edges:");
+  //     console.log(edges);
+  //     setCurrentEdge("You selected: " + edges[0]);
+  //   }
+  // };
+
   const events = {
     select: function (event) {
-      var { edges } = event;
+      var { nodes, edges } = event;
+      console.log("Selected nodes:");
+      console.log(nodes);
       console.log("Selected edges:");
-      console.log(edges);
-      setCurrentEdge("You selected: " + edges[0]);
+      var selected_edges_labels = graph.edges.filter(function (item) {
+        return edges.indexOf(item.id) > -1;
+      })
+      console.log(selected_edges_labels)
+      setCurrentEdge(selected_edges_labels.map(edge => [edge.title]));
     }
   };
 
@@ -70,7 +88,7 @@ function NetworkGraph(props) {
           <Card>
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5" component="h2">
-                Heading
+                Nodes
             </Typography>
             <Typography>
                 You have entered: {props.sentence}
@@ -82,7 +100,7 @@ function NetworkGraph(props) {
           <Card>
             <CardContent className={classes.cardContent}>
               <Typography gutterBottom variant="h5" component="h2">
-                Heading
+                Edges
             </Typography>
               <Typography>
                 {currentEdge}
