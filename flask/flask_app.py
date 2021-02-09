@@ -27,7 +27,7 @@ driver = GraphDatabase.driver(
 
 #     return {'value': g}
 
-@app.route('/get_examples', methods=['GET'])
+@app.route('/api/get_examples', methods=['GET'])
 def get_examples():
   cypher_query = '''
     MATCH (p1:Arg)-->() 
@@ -46,7 +46,7 @@ def get_examples():
     print(e)
     return f"Error: {str(e)}", 500
 
-@app.route('/graph', methods=['GET'])
+@app.route('/api/graph', methods=['GET'])
 def get_graph():
   name = request.args.get('name')
   cypher_query = '''
