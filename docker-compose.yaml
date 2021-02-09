@@ -8,13 +8,21 @@ services:
       - "7474:7474"
       - "7687:7687"
     environment:
-      - NEO4J_AUTH=neo4j/test 
+      - NEO4J_AUTH=neo4j/test
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:7474"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
 
   flask:
     build: ./flask
     container_name: flask_app
     ports:
       - "8000:8000"
+    restart: on-failure
+    depends_on:
+      - neo4j
     links:
       - neo4j
 
