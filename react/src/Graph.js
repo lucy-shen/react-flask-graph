@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { useWindowWidth } from "@react-hook/window-size";
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -45,15 +46,18 @@ function NetworkGraph(props) {
   // console.log(dimensions);
 
   const [update, setUpdate] = useState(0);
+  const [loading, setLoading] = useState(true);
   const version = useMemo(uuidv4, [graph, update, windowWidth]);
 
   useEffect(() => {
-    if (!props.sentence) {
-      props.sentence = "Johnson";
-    }
+    // if (!props.sentence) {
+    //   props.sentence = "Johnson";
+    // }
+    setLoading(true);
     axios.get('http://' + ip + '/api/graph', { params: { name: props.sentence } }).then(response => {
       setGraph(response.data.value);
-      console.log(response)
+      setLoading(false);
+      console.log(response);
       // console.log(graph)
     });
   }, [props.sentence]);
@@ -109,6 +113,7 @@ function NetworkGraph(props) {
           </Card>
         </Grid>
         <Grid item xs={12}>
+        {loading ? <CircularProgress /> :  
           <Card>
             <Button onClick={() => setUpdate(update + 1)} size="small" color="primary">recenter</Button>
             <ErrorBoundary>
@@ -123,6 +128,7 @@ function NetworkGraph(props) {
               />
             </ErrorBoundary>
           </Card>
+          }
         </Grid>
       </Grid>
     </div>
