@@ -66,7 +66,7 @@ export default function App() {
 
   const classes = useStyles();
   const [value, setValue] = useState('');
-  const [sentence, setSentence] = useState('');
+  const [sentence, setSentence] = useState('Johnson');
 
   const myRef = useRef(null)
 
